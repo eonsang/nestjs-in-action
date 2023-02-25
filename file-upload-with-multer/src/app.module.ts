@@ -8,7 +8,7 @@ import { S3StorageModule } from './s3Storage/s3Stroage.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: '.env.local',
       isGlobal: true,
     }),
     DistStorageModule,
