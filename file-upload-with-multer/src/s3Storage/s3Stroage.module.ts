@@ -3,7 +3,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import * as mime from 'mime-types';
 import { S3StorageController } from './s3Storage.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { S3Client } from '@aws-sdk/client-s3';
+import { S3 } from '@aws-sdk/client-s3';
 import * as multerS3 from 'multer-s3';
 
 @Module({
@@ -12,7 +12,7 @@ import * as multerS3 from 'multer-s3';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory(configService: ConfigService) {
-        const s3 = new S3Client({
+        const s3 = new S3({
           region: configService.get('AWS_REGION'),
           credentials: {
             accessKeyId: configService.get('AWS_S3_ACCESS_KEY'),
@@ -20,6 +20,7 @@ import * as multerS3 from 'multer-s3';
           },
         });
 
+        console.log(configService.get('AWS_S3_BUCKET'));
         return {
           storage: multerS3({
             s3,
